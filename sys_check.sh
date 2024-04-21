@@ -25,7 +25,7 @@ _30=$(print_sepa "*" 30)
 printf "$_30 1. 基本信息扫描 $_30\n"
 get_hardware_info(){
     printf "$_15\n"
-    printf "$_15 硬件信息\n"
+    printf "$_15 a. 硬件信息\n"
     printf "$_15\n"
     # cpu
     cpu_model="$(lscpu | grep '^Model name' | awk -F ':' '{print $2}' | xargs)"
@@ -72,7 +72,7 @@ get_hardware_info
 
 get_sys_status(){
     printf "$_15\n"
-    printf "$_15 系统状态\n"
+    printf "$_15 b. 系统状态\n"
     printf "$_15\n"
     hostname=$(hostname)
     os=$(cat /etc/system-release)
