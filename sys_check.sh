@@ -55,8 +55,11 @@ get_hardware_info(){
     printf "         当前内存插槽有效使用率 $mem_effective_slots/$mem_slots, 总容量 $((mem_total_sizes / 1024))GB\n"
     # disk
     printf "磁盘信息:\n"
+    disk=/dev/$(lsblk -o NAME,TYPE | grep disk | awk -F ' ' '{print $1}')
+    disk_speed=$(hdparm -Tt $disk | grep "Timing cached reads")
     part=$(lsblk -o NAME,TYPE,FSTYPE,SIZE,MOUNTPOINT)
     printf "%s\n" "$part" | awk '{printf "         %-12s %-8s %-12s %s\n", $1,$2,$3,$4}'
+    printf "$disk $disk_speed\n" | awk -F ' ' '{printf $1"    "$11$12"\n"}'
     # nic
     printf "网卡信息:\n"
     interfaces=$(ip link show | awk -F: '$0 !~ "lo|vir|wl|^[^0-9]"{print $2;getline}')
@@ -94,3 +97,5 @@ get_sys_status(){
     printf "当前登录用户数: %d\n" "$logged_users"
 }
 get_sys_status
+
+get_
