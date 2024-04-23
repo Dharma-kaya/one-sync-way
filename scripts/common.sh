@@ -83,13 +83,34 @@ ceate_backup(){
     echo "已创建备份文件：$backup_file"
 }
 
-# 错误处理函数
-haddle_error(){
-    # 编写一个通用的错误处理函数，用于处理脚本中的错误情况。这可以提高脚本的健壮性。
-    local error_message="$1"
-    echo "[ERROR] $error_message"
-    exit 1
+
+# 通用错误处理函数
+handle_error() {
+    local exit_code="$1"
+    local message="$2"
+    echo "Error: $message"
+    exit "$exit_code"
 }
+# 示例：模拟一个错误
+simulate_error() {
+    local random_number=$((RANDOM % 2))
+    if [ "$random_number" -eq 0 ]; then
+        handle_error 1 "Something went wrong!"
+    else
+        echo "No error this time."
+    fi
+}
+# 主函数
+main() {
+    simulate_error
+    echo "Script continues normally."
+}
+# 调用主函数
+main
+
+
+
+
 
 # 日志轮转函数
 rotate_logs(){
